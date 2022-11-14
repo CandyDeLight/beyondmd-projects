@@ -91,14 +91,14 @@ If/when you clone this repository, I highly recommended changing into the direct
   ### Running (without docker-compose)
   We need to start the database before opening the app. We can do so with `sudo service postgresql start`. We also need to create the database tables for the app. We can do so with `python3 manage.py migrate`.
 
-  This should create all the tables in the database and your app is ready to go. Type in `python3 manage.py runserver`. Go to your browser and type in `127.0.0.1:8000`.
+  This should create all the tables in the database and your app is ready to go. Type in `python3 manage.py runserver`. Go to your browser and type in `127.0.0.1:8000`. Using port 8000 may cause an issue if it's already being used (i.e. from project 1). 
 
   ### Running (with docker-compose)
   If you are running docker-compose and have Docker Desktop, you can type in `docker-compose up`. You will then need to open the terminal of the app in the container on Docker Desktop. Once opened, type in `python3 manage.py migrate`.
 
   If you are running docker-compose and don't have Docker Desktop, you can type in `docker-compose up -d --build`. Then type in `docker-compose exec app python3 manage.py migrate`.
 
-  This should create all the tables in the database and your app is ready to go. Either way will work and it's up to you. In your browser type in `localhost:8000`.
+  This should create all the tables in the database and your app is ready to go. Either way will work and it's up to you. In your browser type in `localhost:8001`.
 
   ### Useful Links
   More about TMDB's API and how to obtain an API key can be found on [developers.themoviedb.org](https://developers.themoviedb.org/3/getting-started/introduction) or [themoviedb.org](https://www.themoviedb.org/documentation/api?language=en-US).
