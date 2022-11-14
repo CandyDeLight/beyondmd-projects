@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>BeyondMD: Project 3</title>
+        <!-- <link rel="stylesheet" href="./style.css"> -->
+        <!-- <link rel="icon" href="./favicon.ico" type="image/x-icon"> -->
+    </head>
+    <body>
+        <center>
+            <h1>Movie Title: <i>{{title}}</i></h1>
+            <img src="{{poster}}">
+            <h2>Release Date: {{release}}</h2>
+            <hr>
+            <form action="addToDatabase/" method="POST">
+                {% csrf_token %}
+                <p>
+                    <b>Movie Title: </b><i>{{title}}</i><input type="hidden" name="title" value="{{title}}"> &nbsp&nbsp|&nbsp&nbsp <b>Rating: </b><input type="number" name="rating" min="1" max="10" placeholder="1-10" size="1" required>
+                </p>
+                <input type="hidden" name="poster" value="{{poster}}">
+                <textarea type="text" name="comment" placeholder="Leave your comment here!" rows="4" cols="40" maxlength="500" required></textarea>
+                <br>
+                <br>
+                <input type="submit" value="SUBMIT REVIEW">
+            </form>
+            <hr>
+            <a href="{% url 'profile' %}">Your Profile</a>
+            <br>
+        </center>
+    </body>
+</html>

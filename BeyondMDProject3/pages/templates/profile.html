@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Project 3</title>
+        {% load static %}
+        <!-- <link rel="stylesheet" href="./style.css"> -->
+        <!-- <link rel="icon" href="./favicon.ico" type="image/x-icon"> -->
+    </head>
+    <body>
+        <center>
+            <a href="{% url 'index' %}">Home Page</a>
+            {% if messages %}
+                <hr>
+                {% for message in messages %}
+                <h3{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h3>
+                {% endfor %}
+            {% endif %}
+            {% for review in reviews %}
+                <hr>
+                <br>
+                <div id="{{review.id}}">
+                <img src="{{review.poster}}" width="250" height="375" class="center-img">
+                <form action="deleteFromDatabase/" method="POST" id="form1">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{review.id}}" readonly="readonly">
+                </form>
+                <form action="updateToDatabase/" method="POST" id="form2">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{review.id}}" readonly="readonly">
+                    <p>
+                        <b>Movie Title:</b> <i>{{review.movie_title}}</i> &nbsp&nbsp|&nbsp&nbsp <b>Your Rating: </b><input type="number" name="rating" min="1" max="10" placeholder="1-10" size="0" value="{{review.rating}}"required>
+                    </p>
+                    <textarea type="text" name="comment" placeholder="Update your review here!" rows="4" cols="40" maxlength="500" required>{{review.comment}}</textarea>
+                    <br>
+                    <br>
+                </form>
+                <input type="submit" value="DELETE REVIEW" form="form1"> &nbsp&nbsp|&nbsp&nbsp <input type="submit" value="UPDATE REVIEW" form="form2">
+                </div>
+                <br>
+            {% endfor %}
+            <hr>
+        </center>
+    </body>
+</html>
