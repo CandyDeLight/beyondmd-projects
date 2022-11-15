@@ -23,9 +23,12 @@
                 <br>
                 <div id="{{review.id}}">
                 <img src="{{review.poster}}" width="250" height="375" class="center-img">
-                <form action="deleteFromDatabase/" method="POST" id="form1">
+                <br>
+                <br>
+                <form action="deleteFromDatabase/" method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="id" value="{{review.id}}" readonly="readonly">
+                    <input type="submit" value="DELETE REVIEW">
                 </form>
                 <form action="updateToDatabase/" method="POST" id="form2">
                     {% csrf_token %}
@@ -36,8 +39,9 @@
                     <textarea type="text" name="comment" placeholder="Update your review here!" rows="4" cols="40" maxlength="500" required>{{review.comment}}</textarea>
                     <br>
                     <br>
+                    <input type="submit" value="UPDATE REVIEW">
+                    <br>
                 </form>
-                <input type="submit" value="DELETE REVIEW" form="form1"> &nbsp&nbsp|&nbsp&nbsp <input type="submit" value="UPDATE REVIEW" form="form2">
                 </div>
                 <br>
             {% endfor %}
