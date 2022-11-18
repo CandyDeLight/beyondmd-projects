@@ -19,7 +19,7 @@ def login_page(request):
         user = authenticate(request, username=user_info["username"], password=user_info["password"])
         if user is not None:
             # if the username and password matches, it'll login
-            # logging in allow us to get the current logged in user info (id, username, etc)
+            # logging in allow us to get the current logged in user info (id, username, email, etc)
             login(request, user)
             return redirect(index)
         else:
@@ -35,7 +35,8 @@ def signup_page(request):
     if request.method == "POST":
         user_info = request.POST
         # django generates some preexisting tables when you migrate
-        # one of those is a User tables
+        # one of those is a auth_user table
+        # create_user() will save the record into the database
         user = User.objects.create_user(username=user_info["username"], password=user_info["password"])
         return redirect(login_page)
 
@@ -60,8 +61,8 @@ def profile(request):
 @login_required
 def addToDatabase(request): #CREATE
     """
-    we have the data using request.POST and are creating a field/row for reviews
-    then save/add/insert/etc. that field/row into the database using django's .save()
+    we have the data using request.POST and are creating a record for reviews
+    then save/add/insert/etc. that record into the database using django's .save()
     """
     if request.method == "POST":
         # a user may find out this specific URL and doesn't make a POST request with the data needed
@@ -77,7 +78,7 @@ def readFromDatebase(id): #READ
     and .filter() then and convert the result to a list as this makes it easier to parse through
     """
     # instead of getting all the reviews that was left which is what i had before
-    # we can now access just the access the reviews left by the filtering the result
+    # we can now access just the reviews left by the filtering the result
     # with the current logged in user using their id/username (i choose id)
     your_reviews = list(Reviews.objects.all().filter(user_id=id))
     return your_reviews

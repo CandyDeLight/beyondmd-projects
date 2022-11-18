@@ -9,7 +9,7 @@ from django.db import models
 
 class Reviews(models.Model):
     """
-    Reviews is the table. the attributes are movie_titles, poster, rating, and comment
+    Reviews is the table. the attributes are movie_titles, poster, rating, comment, and user_id
     it also has id or primary key but that is auto generated
     """
     movie_title = models.CharField(max_length=750)
