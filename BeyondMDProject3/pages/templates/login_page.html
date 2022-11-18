@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BeyondMD: Project 3</title>
+    <!-- {% load static %} -->
+    <!-- <link rel="stylesheet" href="./style.css"> -->
+    <!-- <link rel="icon" href="./favicon.ico" type="image/x-icon"> -->
+  </head>
+  <body>
+    <center>
+      <h2>LOGIN</h2>
+      <hr>
+      <br>
+      <form action="{% url 'login_page' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Enter your username"></textarea> <input type="text" name="password" placeholder="Enter your password"></textarea>
+        <br>
+        <br>
+        <input type="submit" value="LOGIN">
+        <br>
+        <br>
+        <hr>
+      </form>
+      <h3>Click the link below to signup.</h3>
+      <a href="{% url 'signup_page' %}">SIGNUP</a>
+    </center>
+  </body>
+</html>

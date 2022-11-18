@@ -4,14 +4,15 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Project 3</title>
-        {% load static %}
+        <title>BeyondMD: Project 3</title>
+        <!-- {% load static %} -->
         <!-- <link rel="stylesheet" href="./style.css"> -->
         <!-- <link rel="icon" href="./favicon.ico" type="image/x-icon"> -->
     </head>
     <body>
         <center>
             <a href="{% url 'index' %}">Home Page</a>
+            <h1>Welcome, {{username}}!</h1>
             {% if messages %}
                 <hr>
                 {% for message in messages %}

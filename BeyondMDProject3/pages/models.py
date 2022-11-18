@@ -13,9 +13,7 @@ class Reviews(models.Model):
     it also has id or primary key but that is auto generated
     """
     movie_title = models.CharField(max_length=750)
-    poster = models.CharField(max_length=1250, default = "")
+    poster = models.CharField(max_length=1250, default="")
     rating = models.PositiveIntegerField()
     comment = models.CharField(max_length=500)
-
-    # def __str__(self):
-        # return self.movie_title + ", " + str(self.rating) + ", " + self.comment
+    user_id = models.PositiveIntegerField(default="1")

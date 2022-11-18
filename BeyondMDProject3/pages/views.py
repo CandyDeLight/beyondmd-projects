@@ -1,49 +1,93 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from . import views
 from . models import Reviews
 import tmdb_api
 
+def login_page(request):
+    """
+    this will be the landing page
+    user can login with their username and password
+    """
+    if request.method == "GET":
+        return render(request, 'login_page.html')
+    if request.method == "POST":
+        user_info = request.POST
+        user = authenticate(request, username=user_info["username"], password=user_info["password"])
+        if user is not None:
+            # if the username and password matches, it'll login
+            # logging in allow us to get the current logged in user info (id, username, etc)
+            login(request, user)
+            return redirect(index)
+        else:
+            # if the username/password is incorrect it'll simply redirect them back to the login page
+            return redirect(login_page)
+
+def signup_page(request):
+    """
+    if users have not signed up before they can do so here with their username and password
+    """
+    if request.method == "GET":
+        return render(request, 'signup_page.html')
+    if request.method == "POST":
+        user_info = request.POST
+        # django generates some preexisting tables when you migrate
+        # one of those is a User tables
+        user = User.objects.create_user(username=user_info["username"], password=user_info["password"])
+        return redirect(login_page)
+
+@login_required
 def index(request):
     """
-    index is the landpage, it will call the API and display the data
+    index is the homepage of the app after logging in, it will call the API and display the data
     """
     movie = tmdb_api.get_movie_info()
     return render(request, 'index.html', { "title": movie[0], "poster": movie[1], "release": movie[2] })
 
+@login_required
 def profile(request):
     """
     there is a profile component in which you can view all the reviews you've left on movies
     """
-    your_reviews = readFromDatebase()
+    your_reviews = readFromDatebase(request.user.id)
     if not your_reviews:
         messages.add_message(request, messages.INFO, "You have not left any reviews yet.")
-    return render(request, 'profile.html', { "reviews": your_reviews })
+    return render(request, 'profile.html', { "reviews": your_reviews, "username": request.user.username })
 
+@login_required
 def addToDatabase(request): #CREATE
     """
     we have the data using request.POST and are creating a field/row for reviews
-    then save/add/insert/etc. that field/row into the database using django's ORM .save()
+    then save/add/insert/etc. that field/row into the database using django's .save()
     """
     if request.method == "POST":
         # a user may find out this specific URL and doesn't make a POST request with the data needed
         user_review = request.POST
-        add_review = Reviews(movie_title=user_review["title"], poster=user_review["poster"], rating=user_review["rating"], comment=user_review["comment"])
+        add_review = Reviews(movie_title=user_review["title"], poster=user_review["poster"], rating=user_review["rating"], comment=user_review["comment"], user_id=request.user.id)
         add_review.save()
     # the return statement will always happen regardless if it is a POST or GET request
     return redirect(index)
 
-def readFromDatebase(): #READ
-    # query the database for all the reviews using django's ORM .all()
-    # then and convert the result to a list as this makes it easier to parse through
-    your_reviews = list(Reviews.objects.all())
+def readFromDatebase(id): #READ
+    """
+    query the database for all the reviews left by the current logged in user using django's .all()
+    and .filter() then and convert the result to a list as this makes it easier to parse through
+    """
+    # instead of getting all the reviews that was left which is what i had before
+    # we can now access just the access the reviews left by the filtering the result
+    # with the current logged in user using their id/username (i choose id)
+    your_reviews = list(Reviews.objects.all().filter(user_id=id))
     return your_reviews
 
+@login_required
 def updateToDatabase(request): #UPDATE
     """
     query the database to first get the review that needs to be updated
     update said review with the new rating/comment
-    then save the updated review back to the database using django's ORM .save()
+    then save the updated review back to the database using django's .save()
     """
     if request.method == "POST":
         # a user may find out this specific URL and doesn't make a POST request with the data needed
@@ -55,10 +99,11 @@ def updateToDatabase(request): #UPDATE
     # the return statement will always happen regardless if it is a POST or GET request
     return redirect(profile)
 
+@login_required
 def deleteFromDatabase(request): #DELETE
     """
     query the database to first get the review that needs to be deleted
-    then delete the review from the database using django's ORM .delete()
+    then delete the review from the database using django's .delete()
     """
     if request.method == "POST":
         # a user may find out this specific URL and doesn't make a POST request with the data needed
@@ -67,3 +112,12 @@ def deleteFromDatabase(request): #DELETE
         delete_review.delete()
     # the return statement will always happen regardless if it is a POST or GET request
     return redirect(profile)
+
+@login_required
+def logout_action(request):
+    """
+    this function will simply end the current logged in user session
+    and redirect them back to the login page
+    """
+    logout(request)
+    return redirect(login_page)

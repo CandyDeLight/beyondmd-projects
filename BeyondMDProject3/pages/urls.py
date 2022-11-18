@@ -3,9 +3,13 @@ from . import views
 
 # all of my URLs are here
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.login_page, name='login_page'),
+    path('login_page/', views.login_page, name='login_page'),
+    path('signup_page/', views.signup_page, name='signup_page'),
+    path('index/', views.index, name='index'),
+    path('index/logout_action/', views.logout_action, name='logout_action'),
     path('profile/', views.profile, name='profile'),
-    path('addToDatabase/', views.addToDatabase, name='addToDatabase'),
+    path('index/addToDatabase/', views.addToDatabase, name='addToDatabase'),
     path('profile/deleteFromDatabase/', views.deleteFromDatabase, name='deleteFromDatabase'),
     path('profile/updateToDatabase/', views.updateToDatabase, name='updateToDatabase')
 ]
