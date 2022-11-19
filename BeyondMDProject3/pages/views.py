@@ -34,8 +34,6 @@ def signup_page(request):
         return render(request, 'signup_page.html')
     if request.method == "POST":
         user_info = request.POST
-        # django generates some preexisting tables when you migrate
-        # one of those is a auth_user table
         # create_user() will save the record into the database
         user = User.objects.create_user(username=user_info["username"], password=user_info["password"])
         return redirect(login_page)
@@ -51,12 +49,14 @@ def index(request):
 @login_required
 def profile(request):
     """
-    there is a profile component in which you can view all the reviews you've left on movies
+    there is a profile component in which the user can view all the reviews they have left
     """
-    your_reviews = readFromDatebase(request.user.id)
-    if not your_reviews:
-        messages.add_message(request, messages.INFO, "You have not left any reviews yet.")
-    return render(request, 'profile.html', { "reviews": your_reviews, "username": request.user.username })
+    if request.method == "GET":
+        your_reviews = readFromDatebase(request.user.id)
+        if not your_reviews:
+            # if the user have not left any reviews a message will be displayed to let the user know
+            messages.add_message(request, messages.INFO, "You have not left any reviews yet.")
+        return render(request, 'profile.html', { "reviews": your_reviews, "username": request.user.username })
 
 @login_required
 def addToDatabase(request): #CREATE
@@ -65,11 +65,13 @@ def addToDatabase(request): #CREATE
     then save/add/insert/etc. that record into the database using django's .save()
     """
     if request.method == "POST":
-        # a user may find out this specific URL and doesn't make a POST request with the data needed
+        # a user may find out this specific URL and doesn't make the specific request
+        # to prevent an error we can make sure that if it is the specific request
+        # execute the following code block if the specific request is correct
         user_review = request.POST
         add_review = Reviews(movie_title=user_review["title"], poster=user_review["poster"], rating=user_review["rating"], comment=user_review["comment"], user_id=request.user.id)
         add_review.save()
-    # the return statement will always happen regardless if it is a POST or GET request
+    # the return statement will always happen regardless of the method type
     return redirect(index)
 
 def readFromDatebase(id): #READ
@@ -77,10 +79,10 @@ def readFromDatebase(id): #READ
     query the database for all the reviews left by the current logged in user using django's .all()
     and .filter() then and convert the result to a list as this makes it easier to parse through
     """
-    # instead of getting all the reviews that was left which is what i had before
-    # we can now access just the reviews left by the filtering the result
-    # with the current logged in user using their id/username (i choose id)
     your_reviews = list(Reviews.objects.all().filter(user_id=id))
+    # instead of getting all the reviews that was left which is what I had before
+    # we can now access just the reviews left by the filtering the result
+    # with the current logged in user using their id/username (I choose id)
     return your_reviews
 
 @login_required
@@ -91,13 +93,15 @@ def updateToDatabase(request): #UPDATE
     then save the updated review back to the database using django's .save()
     """
     if request.method == "POST":
-        # a user may find out this specific URL and doesn't make a POST request with the data needed
+        # a user may find out this specific URL and doesn't make the specific request
+        # to prevent an error we can make sure that if it is the specific request
+        # execute the following code block if the specific request is correct
         review_id = request.POST["id"]
         update_review = Reviews.objects.get(id=review_id)
         update_review.rating = request.POST["rating"]
         update_review.comment = request.POST["comment"]
         update_review.save()
-    # the return statement will always happen regardless if it is a POST or GET request
+    # the return statement will always happen regardless of the method type
     return redirect(profile)
 
 @login_required
@@ -107,11 +111,13 @@ def deleteFromDatabase(request): #DELETE
     then delete the review from the database using django's .delete()
     """
     if request.method == "POST":
-        # a user may find out this specific URL and doesn't make a POST request with the data needed
+        # a user may find out this specific URL and doesn't make the specific request
+        # to prevent an error we can make sure that if it is the specific request
+        # execute the following code block if the specific request is correct
         review_id = request.POST["id"]
         delete_review = Reviews.objects.get(id=review_id)
         delete_review.delete()
-    # the return statement will always happen regardless if it is a POST or GET request
+    # the return statement will always happen regardless of the method type
     return redirect(profile)
 
 @login_required
@@ -119,6 +125,6 @@ def logout_action(request):
     """
     this function will simply end the current logged in user session
     and redirect them back to the login page
-    """
+    """ 
     logout(request)
     return redirect(login_page)

@@ -31,7 +31,7 @@
                     <input type="hidden" name="id" value="{{review.id}}" readonly="readonly">
                     <input type="submit" value="DELETE REVIEW">
                 </form>
-                <form action="updateToDatabase/" method="POST" id="form2">
+                <form action="updateToDatabase/" method="POST">
                     {% csrf_token %}
                     <input type="hidden" name="id" value="{{review.id}}" readonly="readonly">
                     <p>
