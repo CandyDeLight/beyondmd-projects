@@ -106,18 +106,25 @@ If/when you clone this repository, I highly recommended changing into the direct
   ### Useful Links
   More about TMDB's API and how to obtain an API key can be found on [developers.themoviedb.org](https://developers.themoviedb.org/3/getting-started/introduction) or [themoviedb.org](https://www.themoviedb.org/documentation/api?language=en-US).
 
-  Information on how to setup postgres on WSL can be found on [WSL Database](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-database)
+  Information on how to setup postgres on WSL can be found on [WSL Database](https://learn.microsoft.com/en-us/windows/wsl/tutorials/wsl-database).
 
   Setting up Docker for WSL can be found on [Docker for WSL](https://docs.docker.com/desktop/windows/wsl/).
+
+  More information about Bootstrap can be found here [Bootstrap](https://getbootstrap.com/).
     <details>
       <summary>Project 3 - Images</summary>
       <br></br>
-      ![image#7](https://i.imgur.com/XFdvMhE.png)
-      ![image#8](https://i.imgur.com/X7joA8G.png)
-      ![image#9](https://i.imgur.com/PBz8bHM.png)
-      ![image#10](https://i.imgur.com/eXOATWE.png)
-      ![image#11](https://i.imgur.com/G9bWpnH.png)
-      ![image#12](https://i.imgur.com/6FtDRMn.png)
+      ![image#7](https://imgur.com/O237EuG)
+      ![image#8](https://imgur.com/XcMKlRk)
+      ![image#9](https://imgur.com/eXOATWE)
+      ![image#10](https://imgur.com/gOzFOiw)
+      ![image#11](https://imgur.com/L11cqvH)
+      ![image#12](https://imgur.com/q9w992y)
+      ![image#12](https://imgur.com/E0HsGFt)
+      ![image#12](https://imgur.com/CTzXev1)
+      ![image#12](https://imgur.com/fhWzVD2)
+      ![image#12](https://imgur.com/x3e8cAo)
+      ![image#12](https://imgur.com/IHuA394)
     </details>
   </ul>
 </details>

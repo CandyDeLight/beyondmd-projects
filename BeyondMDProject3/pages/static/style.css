@@ -1,0 +1,10 @@
+body {
+    background-color: #D0EED4;
+}
+
+.border_items {
+    background-color: #BBEAE5;
+    border-style: solid;
+    padding: 1%;
+    display: inline-block;
+}
