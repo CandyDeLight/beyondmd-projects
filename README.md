@@ -114,17 +114,17 @@ If/when you clone this repository, I highly recommended changing into the direct
     <details>
       <summary>Project 3 - Images</summary>
       <br></br>
-      ![image#7](https://imgur.com/O237EuG)
-      ![image#8](https://imgur.com/XcMKlRk)
-      ![image#9](https://imgur.com/eXOATWE)
-      ![image#10](https://imgur.com/gOzFOiw)
-      ![image#11](https://imgur.com/L11cqvH)
-      ![image#12](https://imgur.com/q9w992y)
-      ![image#12](https://imgur.com/E0HsGFt)
-      ![image#12](https://imgur.com/CTzXev1)
-      ![image#12](https://imgur.com/fhWzVD2)
-      ![image#12](https://imgur.com/x3e8cAo)
-      ![image#12](https://imgur.com/IHuA394)
+      ![image#7](https://imgur.com/O237EuG.png)
+      ![image#8](https://imgur.com/XcMKlRk.png)
+      ![image#9](https://imgur.com/eXOATWE.png)
+      ![image#10](https://imgur.com/gOzFOiw.png)
+      ![image#11](https://imgur.com/L11cqvH.png)
+      ![image#12](https://imgur.com/q9w992y.png)
+      ![image#13](https://imgur.com/E0HsGFt.png)
+      ![image#14](https://imgur.com/CTzXev1.png)
+      ![image#15](https://imgur.com/fhWzVD2.png)
+      ![image#16](https://imgur.com/x3e8cAo.png)
+      ![image#17](https://imgur.com/IHuA394.png)
     </details>
   </ul>
 </details>
