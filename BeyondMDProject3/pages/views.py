@@ -52,14 +52,38 @@ def profile(request):
     there is a profile component in which the user can view all the reviews they have left
     """
     if request.method == "GET":
-        your_reviews = readFromDatebase(request.user.id)
+        your_reviews = readReviewFromDatebase(request.user.id)
         if not your_reviews:
             # if the user have not left any reviews a message will be displayed to let the user know
             messages.add_message(request, messages.INFO, "You have not left any reviews yet.")
         return render(request, 'profile.html', { "reviews": your_reviews, "username": request.user.username })
 
 @login_required
-def addToDatabase(request): #CREATE
+def settings(request):
+    """
+    the settings page allows the user to change their username and or password
+    """
+    if request.method == "GET":
+        return render(request, 'settings.html', { "username": request.user.username })
+    if request.method == "POST":
+        user_info = request.POST
+        if user_info["username"] is not "":
+            update_username = User.objects.get(id=request.user.id)
+            update_username.username = user_info["username"]
+            update_username.save()
+            # instead of rendering the same page, we will redirect the user back to settings page
+            return redirect(settings)
+        if user_info["password"] is not "":
+            # it's possible to save passwords as plaintext (but very bad security practice)
+            # since passwords should be hashed and not plaintext we will use set_password()
+            update_password = User.objects.get(id=request.user.id)
+            update_password.set_password(user_info["password"])
+            update_password.save()
+            # set_password() ends the current user session so I have to redirect user to login page
+            return redirect(login_page)
+
+@login_required
+def addReviewToDatabase(request): #CREATE
     """
     we have the data using request.POST and are creating a record for reviews
     then save/add/insert/etc. that record into the database using django's .save()
@@ -74,7 +98,7 @@ def addToDatabase(request): #CREATE
     # the return statement will always happen regardless of the method type
     return redirect(index)
 
-def readFromDatebase(id): #READ
+def readReviewFromDatebase(id): #READ
     """
     query the database for all the reviews left by the current logged in user using django's .all()
     and .filter() then and convert the result to a list as this makes it easier to parse through
@@ -86,7 +110,7 @@ def readFromDatebase(id): #READ
     return your_reviews
 
 @login_required
-def updateToDatabase(request): #UPDATE
+def updateReviewToDatabase(request): #UPDATE
     """
     query the database to first get the review that needs to be updated
     update said review with the new rating/comment
@@ -96,16 +120,16 @@ def updateToDatabase(request): #UPDATE
         # a user may find out this specific URL and doesn't make the specific request
         # to prevent an error we can make sure that if it is the specific request
         # execute the following code block if the specific request is correct
-        review_id = request.POST["id"]
-        update_review = Reviews.objects.get(id=review_id)
-        update_review.rating = request.POST["rating"]
-        update_review.comment = request.POST["comment"]
+        user_review = request.POST
+        update_review = Reviews.objects.get(id=user_review["id"])
+        update_review.rating = user_review["rating"]
+        update_review.comment = user_review["comment"]
         update_review.save()
     # the return statement will always happen regardless of the method type
     return redirect(profile)
 
 @login_required
-def deleteFromDatabase(request): #DELETE
+def deleteReviewFromDatabase(request): #DELETE
     """
     query the database to first get the review that needs to be deleted
     then delete the review from the database using django's .delete()
@@ -114,8 +138,8 @@ def deleteFromDatabase(request): #DELETE
         # a user may find out this specific URL and doesn't make the specific request
         # to prevent an error we can make sure that if it is the specific request
         # execute the following code block if the specific request is correct
-        review_id = request.POST["id"]
-        delete_review = Reviews.objects.get(id=review_id)
+        user_review = request.POST
+        delete_review = Reviews.objects.get(id=user_review["id"])
         delete_review.delete()
     # the return statement will always happen regardless of the method type
     return redirect(profile)

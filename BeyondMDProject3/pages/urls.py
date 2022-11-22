@@ -9,7 +9,8 @@ urlpatterns = [
     path('index/', views.index, name='index'),
     path('index/logout_action/', views.logout_action, name='logout_action'),
     path('profile/', views.profile, name='profile'),
-    path('index/addToDatabase/', views.addToDatabase, name='addToDatabase'),
-    path('profile/deleteFromDatabase/', views.deleteFromDatabase, name='deleteFromDatabase'),
-    path('profile/updateToDatabase/', views.updateToDatabase, name='updateToDatabase')
+    path('profile/settings/', views.settings, name='settings'),
+    path('index/addReviewToDatabase/', views.addReviewToDatabase, name='addReviewToDatabase'),
+    path('profile/updateReviewToDatabase/', views.updateReviewToDatabase, name='updateReviewToDatabase'),
+    path('profile/deleteReviewFromDatabase/', views.deleteReviewFromDatabase, name='deleteReviewFromDatabase')
 ]

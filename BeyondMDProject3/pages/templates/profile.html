@@ -22,13 +22,16 @@
                 <li class="nav-item px-1">
                     <a class="btn btn-primary" href="{% url 'profile' %}"><u>PROFILE</u></a>
                 </li>
+                <li class="nav-item px-1">
+                    <a class="btn btn-primary" href="{% url 'settings' %}">SETTINGS</a>
+                </li>
             </ul>
             <hr>
-            <h1>Welcome, {{username}}!</h1>
+            <h2>Welcome, {{username}}!</h2>
             {% if messages %}
                 <hr>
                 {% for message in messages %}
-                <h3{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</h3>
+                    <h3>{{ message }}</h3>
                 {% endfor %}
             {% endif %}
             <hr>
@@ -36,14 +39,14 @@
                 <div id="{{review.id}}">
                     <div class="border_items">
                         <img src="{{review.poster}}" width="250" height="375" class="center-img">
-                        <form action="deleteFromDatabase/" method="POST">
+                        <form action="deleteReviewFromDatabase/" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="id" value="{{review.id}}" readonly="readonly">
                             <hr>
                             <input class="btn btn-primary" type="submit" value="DELETE YOUR REVIEW">
                             <hr>
                         </form>
-                        <form action="updateToDatabase/" method="POST">
+                        <form action="updateReviewToDatabase/" method="POST">
                             {% csrf_token %}
                             <input type="hidden" name="id" value="{{review.id}}" readonly="readonly">
                             <p>
